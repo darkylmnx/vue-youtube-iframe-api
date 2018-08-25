@@ -1,5 +1,5 @@
 import { MIN_SIZES, SIZES } from './config'
-import Player from './components/Player'
+import _Player from './components/Player'
 
 const plugin = {
   install (Vue, {width, height, loadComponent = true} = {}) {
@@ -19,10 +19,11 @@ const plugin = {
     first_script.parentNode.insertBefore(tag, first_script)
 
     // load component globally
-    loadComponent && Vue.component('VytiaPlayer', Player)
+    loadComponent && Vue.component('VytiaPlayer', _Player)
   }
 }
 
 typeof window.Vue === 'object' && window.Vue.use(plugin) 
 
 export default plugin
+export const Player = _Player
