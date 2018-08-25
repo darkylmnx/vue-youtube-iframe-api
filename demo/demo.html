@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  
+</head>
+<body>
+  <div id="app">
+    <h1>Vue Youtube Iframe Api Player</h1>
+
+    <p><input placeholder="add a url" v-model="url"></p>
+    <p><input placeholder="add an id" v-model="id"></p>
+
+    <vytia-player
+      ref="p"
+      :id="id"
+      :url="url"
+      :player-vars="{controls: 0}"
+      @read="onPlayerReady"
+    >
+    </vytia-player>
+
+    <p>
+      <button @click="play">play</button>
+      <button @click="pause">pause</button>
+    </p>
+
+    <h2>To get the full list of player vars</h2>
+    <a href="https://developers.google.com/youtube/player_parameters?hl=fr">
+      https://developers.google.com/youtube/player_parameters?hl=fr
+    </a>
+
+    <h2>To get the full list of methods</h2>
+    <a href="https://developers.google.com/youtube/iframe_api_reference?hl=fr#Playback_controls">
+      https://developers.google.com/youtube/iframe_api_reference?hl=fr#Playback_controls
+    </a>
+  </div>
+  <script src="./main.js"></script>
+</body>
+</html>
