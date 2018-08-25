@@ -3,6 +3,7 @@ import _Player from './components/Player'
 
 const plugin = {
   install (Vue, {width, height, loadComponent = true} = {}) {
+    console.log('yes')
     if (width && width > MIN_SIZES.WIDTH) {
       SIZES.WIDTH = width
     }
@@ -22,6 +23,8 @@ const plugin = {
     loadComponent && Vue.component('VytiaPlayer', _Player)
   }
 }
+
+typeof window.Vue === 'function' && window.Vue.use(plugin) 
 
 export default plugin
 export const Player = _Player
