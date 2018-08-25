@@ -23,7 +23,5 @@ const plugin = {
   }
 }
 
-typeof window.Vue === 'object' && window.Vue.use(plugin) 
-
 export default plugin
 export const Player = _Player
