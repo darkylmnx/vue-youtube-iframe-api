@@ -5,19 +5,23 @@ const STATES = {}
 
 export default {
   props: {
-    id: {
+    ytid: {
       type: String
     },
-    url: {
+    yturl: {
       type: String
     },
     width: {
       type: [String, Number],
-      default: SIZES.WIDTH
+      default() {
+        return SIZES.WIDTH
+      }
     },
     height: {
       type: [String, Number],
-      default: SIZES.HEIGHT
+      default() {
+        return SIZES.HEIGHT
+      }
     },
     playerVars: {
       type: Object,
@@ -26,18 +30,18 @@ export default {
   },
 
   watch: {
-    id (new_id) {
-      this.loadById(new_id)
+    ytid (new_ytid) {
+      this.loadById(new_ytid)
     },
-    url (new_url) {
-      this.loadByUrl(new_url)
+    yturl (new_yturl) {
+      this.loadByUrl(new_yturl)
     }
   },
 
   methods: {
     onReady (event) {
       if (this.shouldLoadByUrl) {
-        this.loadByUrl(this.url)
+        this.loadByUrl(this.yturl)
         this.shouldLoadByUrl = false
       }
 
@@ -80,7 +84,7 @@ export default {
 
   created () {
     this.player = null
-    this.shouldLoadByUrl = (typeof this.url === 'string' && this.url.length)
+    this.shouldLoadByUrl = (typeof this.yturl === 'string' && this.yturl.length)
   },
 
   mounted () {
@@ -90,7 +94,7 @@ export default {
       this.player = new window.YT.Player(this.$refs.player, {
         width: this.width,
         height: this.height,
-        videoId: this.id,
+        videoId: this.ytid,
         playerVars: this.playerVars,
         events: {
           onReady: this.onReady,
