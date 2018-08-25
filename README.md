@@ -1,15 +1,18 @@
 # Vue Youtube Iframe API
 
 Hi, this is a Vue plugin to add youtube embed videos to your web project and control them.
+
 It is very handy to create a custom player based on youtube videos, checkout this website for example :
 https://foreignrap.com
 
 ## Installation
 
 First add it to your project via yarn:
+
 `yarn add vue-youtube-iframe-api`
 
 OR npm:
+
 `npm install vue-youtube-iframe-api --save`
 
 Then, tell Vue about the plugin (Note that the name of the variable here is up to you).
@@ -31,6 +34,7 @@ new Vue( ... )
 ```
 
 This Vue plugin gives you access to a `<vytia-player ytid="..."></vytia-player>` component.
+
 However, you can use the component name you want by importing the component locally or globally.
 
 ```javascript
@@ -51,7 +55,9 @@ new Vue({
 ```
 
 ## How it works ?
+
 Just add the component where you want with either a **ytid** or **yturl** prop.
+
 When the prop changes, the player will automatically load the new relevant video.
 
 ## Component Props
@@ -64,7 +70,9 @@ When the prop changes, the player will automatically load the new relevant video
 | height     | the iframe's height  note: youtube asks for 200 minimum                                                      | String | Number | 360     |
 | playerVars | the iframe's player variables, full list: https://developers.google.com/youtube/player_parameters?hl=fr | Object          | {}      |
 
-Make sure to look at all player variables as this will help you remove controls from the youtube iframe
+Make sure to look at all player variables as this will help you remove controls from the youtube iframe.
+
+https://developers.google.com/youtube/player_parameters?hl=fr
 
 ## Component Events
 
@@ -114,3 +122,9 @@ new Vue({
   }
 })
 ```
+
+Make sure to check out the demo to see how to control the player.
+
+The demo works with parcel-bundler.
+
+Install it by doing `npm install -g parcel-bundler` or `yarn global add parcel-bundler`.
