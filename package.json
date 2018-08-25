@@ -6,6 +6,6 @@
   "description": "Vue JS component wrapping a Youtube Video Player with the Youtube Iframe API",
   "author": "darkylmnx",
   "scripts": {
-    "build": "parcel build ./src/main.js --no-cache"
+    "build": "parcel build ./src/main.js --no-cache --global=Vytia"
   }
 }
