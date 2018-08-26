@@ -13,13 +13,13 @@ export default {
     },
     width: {
       type: [String, Number],
-      default() {
+      default () {
         return SIZES.WIDTH
       }
     },
     height: {
       type: [String, Number],
-      default() {
+      default () {
         return SIZES.HEIGHT
       }
     },
@@ -73,12 +73,12 @@ export default {
       const id = getIdFromUrl(url)
       const method = Number(this.playerVars.autoplay) === 1 ? 'loadVideoById' : 'cueVideoById'
 
-      id && this.player[method](id)
+      id ? this.player[method](id) : this.player.loadVideoById(null)
     },
     loadById (id) {
       const method = Number(this.playerVars.autoplay) === 1 ? 'loadVideoById' : 'cueVideoById'
 
-      this.player[method](id)
+      id ? this.player[method](id) : this.player.loadVideoById(null)
     }
   },
 
@@ -91,7 +91,7 @@ export default {
     IframeAPIReady.then(() => {
       Object.assign(STATES, swapObject(window.YT.PlayerState))
 
-      this.player = new window.YT.Player(this.$refs.player, {
+      this.player = new window.YT.Player(this.$el, {
         width: this.width,
         height: this.height,
         videoId: this.ytid,
@@ -113,6 +113,6 @@ export default {
   },
 
   render (h) {
-    return h('div', {ref: 'player'})
+    return h('div')
   }
 }
