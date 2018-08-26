@@ -1,6 +1,6 @@
 {
   "name": "vue-youtube-iframe-api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "src/main.js",
   "license": "MIT",
   "description": "Vue JS component wrapping a Youtube Video Player with the Youtube Iframe API",
