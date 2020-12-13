@@ -2,9 +2,12 @@
 
 # compiled output
 dist/
+.catch/
 !/dist
 /tmp
 /out-tsc
+demo/.cache/
+demo/.dist/
 
 # Runtime data
 pids
