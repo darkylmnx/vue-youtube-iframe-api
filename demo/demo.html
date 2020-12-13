@@ -13,13 +13,18 @@
 
     <p><input placeholder="add a url" v-model="url"></p>
     <p><input placeholder="add an id" v-model="id"></p>
+    <p><input placeholder="add a quality" v-model="quality"></p>
 
     <vytia-player
       ref="p"
-      :ytid="id"
-      :yturl="url"
-      :player-vars="{controls: 0}"
-      @read="onPlayerReady"
+      :id="id"
+      :url="url"
+      start-at="120"
+      end-at="130"
+      :player-vars="{controls: 0, autoplay: 1}"
+      :quality="quality"
+      @playback-quality-change="onQualityChange"
+      @ready="onPlayerReady"
     >
     </vytia-player>
 

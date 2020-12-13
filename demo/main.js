@@ -1,7 +1,7 @@
-import Vue from 'vue/dist/vue.min.js'
-import VuePlayer from '../src/main'
+import Vue from 'vue/dist/vue.min.js';
+import VuePlayer from '../src/main';
 
-Vue.use(VuePlayer)
+Vue.use(VuePlayer);
 
 new Vue({
   el: '#app',
@@ -9,19 +9,23 @@ new Vue({
   data () {
     return {
       url: null,
-      id: null
-    }
+      id: null,
+      quality: null,
+    };
   },
 
   methods: {
-    onPlayerReady () {
-      console.log(this.$refs.p.player)
+    onPlayerReady() {
+      window.player = this.$refs.p.player; 
+    },
+    onQualityChange(event) {
+      console.log('quality', event);
     },
     play() {
-      this.$refs.p.player.playVideo()
+      this.$refs.p.player.playVideo();
     },
     pause() {
-      this.$refs.p.player.pauseVideo()
-    }
-  }
-})
+      this.$refs.p.player.pauseVideo();
+    },
+  },
+});
