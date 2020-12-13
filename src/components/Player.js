@@ -1,100 +1,119 @@
-import { SIZES, IframeAPIReady } from '../config'
+import VytiaService from '../Service';
 import { getIdFromUrl, swapObject } from '../utils'
 
 const STATES = {}
 
 export default {
   props: {
-    ytid: {
-      type: String
+    id: {
+      type: String,
+      default: null,
     },
-    yturl: {
-      type: String
+    url: {
+      type: String,
+      default: null,
+    },
+    startAt: {
+      type: Number,
+      default: null,
+    },
+    endAt: {
+      type: Number,
+      default: null,
+    },
+    quality: {
+      type: String,
+      default: null,
     },
     width: {
       type: [String, Number],
-      default () {
-        return SIZES.WIDTH
-      }
+      default() {
+        return VytiaService.options.width;
+      },
     },
     height: {
       type: [String, Number],
-      default () {
-        return SIZES.HEIGHT
-      }
+      default() {
+        return VytiaService.options.height;
+      },
     },
     playerVars: {
       type: Object,
-      default: {}
+      default() {
+        return { ...VytiaService.options.playerVars };
+      },
     }
   },
 
   watch: {
-    ytid (new_ytid) {
-      this.loadById(new_ytid)
+    id(newId) {
+      this.loadById(newId, this.getVideoOptions());
     },
-    yturl (new_yturl) {
-      this.loadByUrl(new_yturl)
+    url(newUrl) {
+      this.loadByUrl(newUrl, this.getVideoOptions());
     }
   },
 
   methods: {
-    onReady (event) {
-      if (this.shouldLoadByUrl) {
-        this.loadByUrl(this.yturl)
-        this.shouldLoadByUrl = false
-      }
+    getVideoOptions() {
+      return {
+        startSeconds: this.startAt,
+        endSeconds: this.endAt,
+        suggestedQuality: this.quality,
+      };
+    },
+    onReady(event) {
+      this.url && this.loadByUrl(this.url);
+      this.id && this.loadById(this.id);
 
-      // console.log('ready', event)
-      this.$emit('ready', event)
+      // console.log('ready', event);
+      this.$emit('ready', event);
     },
-    onError (event) {
-      // console.log('error', event)
-      this.$emit('error', event)
+    onError(event) {
+      // console.log('error', event);
+      this.$emit('error', event);
     },
-    onApiChange (event) {
-      // console.log('api-change', event)
-      this.$emit('api-change', event)
+    onApiChange(event) {
+      // console.log('api-change', event);
+      this.$emit('api-change', event);
     },
-    onStateChange (event) {
-      // console.log('state-change', event)
-      this.$emit('state-change', event)
-      this.$emit(STATES[event.data].toLowerCase(), event)
+    onStateChange(event) {
+      console.log('state-change', event);
+      this.$emit('state-change', event);
+      this.$emit(STATES[event.data], event)
     },
-    onPlaybackRateChange (event) {
-      // console.log('playback-rate-change', event)
-      this.$emit('playback-rate-change', event)
+    onPlaybackRateChange(event) {
+      // console.log('playback-rate-change', event);
+      this.$emit('playback-rate-change', event);
     },
-    onPlaybackQualityChange (event) {
-      // console.log('playback-quality-change', event)
-      this.$emit('playback-quality-change', event)
+    onPlaybackQualityChange(event) {
+      // console.log('playback-quality-change', event);
+      this.$emit('playback-quality-change', event);
     },
-    loadByUrl (url) {
-      const id = getIdFromUrl(url)
-      const method = Number(this.playerVars.autoplay) === 1 ? 'loadVideoById' : 'cueVideoById'
-
-      id ? this.player[method](id) : this.player.loadVideoById(null)
+    loadByUrl(videoUrl, options = null) {
+      const videoId = getIdFromUrl(videoUrl);
+      this.loadById(videoId, options);
     },
-    loadById (id) {
-      const method = Number(this.playerVars.autoplay) === 1 ? 'loadVideoById' : 'cueVideoById'
-
-      id ? this.player[method](id) : this.player.loadVideoById(null)
+    loadById(videoId, options = null) {
+      const method = Number(this.playerVars.autoplay) === 1 ? 'loadVideoById' : 'cueVideoById';
+      const params = options ? { videoId, ...options } : videoId;
+      console.log(params);
+      this.player[method](params);
     }
   },
 
-  created () {
-    this.player = null
-    this.shouldLoadByUrl = (typeof this.yturl === 'string' && this.yturl.length)
+  created() {
+    this.player = null;
   },
 
-  mounted () {
-    IframeAPIReady.then(() => {
-      Object.assign(STATES, swapObject(window.YT.PlayerState))
+  mounted() {
+    VytiaService.ready().then(() => {
+      Object.assign(STATES, swapObject(window.YT.PlayerState));
 
       this.player = new window.YT.Player(this.$el, {
         width: this.width,
         height: this.height,
-        videoId: this.ytid,
+        videoId: this.id,
         playerVars: this.playerVars,
         events: {
           onReady: this.onReady,
@@ -102,17 +121,15 @@ export default {
           onApiChange: this.onApiChange,
           onStateChange: this.onStateChange,
           onPlaybackRateChange: this.onPlaybackRateChange,
-          onPlaybackQualityChange: this.onPlaybackQualityChange
-        }
-      })
-    })
+          onPlaybackQualityChange: this.onPlaybackQualityChange,
+        },
+      });
+    });
   },
 
-  destroyed () {
-    this.player.destroy()
+  destroyed() {
+    this.player.destroy();
   },
 
-  render (h) {
-    return h('div')
-  }
-}
+  render: (h) => h('div'),
+};
