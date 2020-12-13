@@ -1,23 +1,22 @@
 // export get id from url
-const id_regex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+const ytUrlRegex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
 
 export function getIdFromUrl(url) {
-  const match = url.match(id_regex)
+  const match = url.match(ytUrlRegex);
 
   if (!match || !match[1]) {
-    return false
+    return false;
   }
 
-  return match[1]
-}
+  return match[1];
+};
 
-// export reverse fonction
 export function swapObject(obj){
-  const new_obj = {}
+  const newObj = {};
 
-  for(var k in obj) {
-    new_obj[obj[k]] = k;
+  for (var k in obj) {
+    newObj[obj[k]] = k;
   }
 
-  return new_obj
+  return newObj;
 }
