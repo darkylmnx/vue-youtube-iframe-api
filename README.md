@@ -18,19 +18,24 @@ OR npm:
 Then, tell Vue about the plugin (Note that the name of the variable here is up to you).
 
 ```javascript
-import Vue from 'vue'
-import VuePlayerPlugin from 'vue-youtube-iframe-api'
+import Vue from 'vue';
+import Vytia from 'vue-youtube-iframe-api';
 
 // simple way
-Vue.use(VuePlayerPlugin)
-// OR, with configuration
-Vue.use(VuePlayerPlugin, {
-  with: '', // optional, used to set global width on all futur instance
-  height: '' // optional, used to set global width on all futur instance
-  loadComponent: true // create the global player component <vytia-player></vytia-player>
-})
+Vue.use(Vytia);
 
-new Vue( ... )
+// OR, with configuration
+Vue.use(Vytia, {
+  scriptUrl: null, // API url, OPTIONAL, default: https://www.youtube.com/iframe_api
+  width: null, // global player width, OPTIONAL, default: 640
+  height: null, // global player height, OPTIONAL, default: 360
+  playerVars: null, // global playerVars, OPTIONAL, default: {}
+  onLoad: null, // iframe loaded callback function, OPTIONAL
+  onError: null, // iframe load failed callback function, OPTIONAL
+});
+
+// instan your Vue app
+new Vue( ... );
 ```
 
 This Vue plugin gives you access to a `<vytia-player ytid="..."></vytia-player>` component.
@@ -56,7 +61,7 @@ new Vue({
 
 ## How it works ?
 
-Just add the component where you want with either a **ytid** or **yturl** prop.
+Just add the component where you want with either a **id** or **url** prop.
 
 When the prop changes, the player will automatically load the new relevant video.
 
@@ -64,8 +69,8 @@ When the prop changes, the player will automatically load the new relevant video
 
 | prop       | description                                                                                                  | type            | default |
 |------------|--------------------------------------------------------------------------------------------------------------|-----------------|---------|
-| ytid       | the youtube video id (found in the url) note: both "ytid" & "yturl" can't be used at the same time               | String          | null    |
-| yturl      | the youtube video url (the id will be auto-detected) note: both "ytid" & "yturl" can't be used at the same time  | String          | null    |
+| id       | youtube video id note: both "ytid" & "yturl" can't be used at the same time               | String          | null    |
+| url      | youtube video url note: both "ytid" & "yturl" can't be used at the same time  | String          | null    |
 | width      | the iframe's width note: youtube asks for 200 minimum                                                        | String | Number | 640     |
 | height     | the iframe's height  note: youtube asks for 200 minimum                                                      | String | Number | 360     |
 | playerVars | the iframe's player variables, full list: https://developers.google.com/youtube/player_parameters?hl=fr | Object          | {}      |
@@ -93,8 +98,8 @@ You can access these methods by adding a **ref** on the component.
 
 | method    | description                                            | params      |
 |-----------|--------------------------------------------------------|-------------|
-| loadById  | programatically loads a new video on the player by ID  | id: String  |
-| loadByUrl | programatically loads a new video on the player by URL | url: String |
+| loadById  | programatically loads a new video on the player by ID  | id: String, options: Object  |
+| loadByUrl | programatically loads a new video on the player by URL | url: String, options: Object |
 
 ## Youtube Player instance
 
